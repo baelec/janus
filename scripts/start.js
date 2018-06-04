@@ -1,0 +1,1 @@
+const child = spawn('electron', ['', '-type', 'f']);
