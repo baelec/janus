@@ -7,7 +7,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "./node_modules/.bin/webpack --config config/webpack.config.dev.js --watch"
+    "start": "node scripts/start.js"
   },
   "author": "Michael Lynch",
   "devDependencies": {
