@@ -1,18 +1,34 @@
-const { spawn, exec } = require('child_process');
+const {spawn} = require('child_process');
 const path = require('path');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.dev');
+const configs = require('../config/webpack.config.dev');
 
-const compiler = webpack(config);
+const children = [];
 
-const watching = compiler.watch({
-  aggregateTimeout: 300,
-  poll: undefined
-}, (err, stats) => {
-  const electron = path.resolve('./node_modules/.bin/electron');
-  const main = path.resolve('./build/webpack/main.js');
-  const child = spawn(electron, [main]);
-  child.on('close', (code, signal) => {
-      watching.close();
-    });
+configs.forEach((config, index) => {
+  const compiler = webpack(config);
+  const watching = compiler.watch({
+    aggregateTimeout: 300,
+    poll: undefined
+  }, (err, stats) => {
+    console.warn(err, stats);
+    if (config.target === 'electron-main') {
+      if (children[index]) {
+        children[index][0].kill();
+        children[index][1].close();
+      }
+      const electron = path.resolve('./node_modules/.bin/electron');
+      const main = path.resolve('./build/webpack/main.js');
+      const child = spawn(electron, [main]);
+      children[index] = [child, watching];
+      child.on('close', (code, signal) => {
+        watching.close();
+      });
+
+      child.stdout.on('data', function(data) {
+        console.log(data.toString());
+      });
+    }
   });
+});
+

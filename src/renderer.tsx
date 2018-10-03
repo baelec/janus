@@ -6,15 +6,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { Janus } from './Janus';
-console.warn('renderer');
 const root = document.getElementById('root');
-console.warn(document);
 if (root) {
   ReactDOM.render(
     <Janus />,
     document.getElementById('root')
   );
-} else {
-  console.warn('wtf');
-  alert('aawtf');
 }

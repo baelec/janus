@@ -37,6 +37,7 @@ module.exports = (isDev = false) => {
       tslint: false,
       checkSyntacticErrors: true,
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ];
 
   const HAPPY_CSS_LOADER = 'happypack/loader?id=css';
