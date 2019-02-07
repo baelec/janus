@@ -11,13 +11,14 @@ configs.forEach((config, index) => {
     aggregateTimeout: 300,
     poll: undefined
   }, (err, stats) => {
-    console.warn(err, stats);
     if (config.target === 'electron-main') {
       if (children[index]) {
         children[index][0].kill();
         children[index][1].close();
       }
-      const electron = path.resolve('./node_modules/.bin/electron');
+
+      const extension = process.platform === 'win32' ? '.cmd' : '';
+      const electron = path.resolve(`./node_modules/.bin/electron${extension}`);
       const main = path.resolve('./build/webpack/main.js');
       const child = spawn(electron, [main]);
       children[index] = [child, watching];
