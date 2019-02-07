@@ -8,7 +8,7 @@ let mainWindow: BrowserWindow | null;
 
 const createWindow = () => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
   // and load the index.html of the app.
   const fileName = `${__dirname}\\index.html`;
   mainWindow.loadFile(fileName);
@@ -22,7 +22,7 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    mainWindow = null;
   });
 };
 
@@ -49,7 +49,7 @@ app.on('activate', () => {
 
 // Listen for async message from renderer process
 
-ipcMain.on('async', (event: IpcMessageEvent , arg: string) => {
+ipcMain.on('async', (event: IpcMessageEvent, arg: string) => {
   // Print 1
   sc();
   console.log(arg + 3, event);
@@ -59,7 +59,6 @@ ipcMain.on('async', (event: IpcMessageEvent , arg: string) => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
 
 export const sc = () => {
   console.warn('rrrr');

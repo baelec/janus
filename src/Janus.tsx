@@ -1,19 +1,45 @@
 import * as React from 'react';
 import { remote, ipcRenderer } from 'electron';
-import {NotebookList} from "./NotebookList";
-import {NotebookButton} from "./NotebookButton";
+import { Button } from '@blueprintjs/core';
+import { NotebookList } from './NotebookList';
+import { NotebookButton } from './NotebookButton';
 const main = remote.require('./main');
 
-export class Janus extends React.PureComponent {
-  render() {
-    const onClick = () =>{
-      ipcRenderer.send('async', 1);
+type Notebook = {
+  id: string;
+  label: string;
+};
+
+type Props = {};
+
+type State = {
+  notebooks: Notebook[];
+};
+
+export class Janus extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      notebooks: [{ id: 'a', label: 'a' }],
     };
+  }
+
+  render() {
+    const onClick = () => {
+      //ipcRenderer.send('async', 1);
+    };
+    const { notebooks } = this.state;
     return (
       <>
-        <button onClick={onClick}>HIAa</button>
+        <Button onClick={onClick}>Create Notebook</Button>
         <NotebookList>
-          <NotebookButton id='0' label='nb0'/>
+          {notebooks.map(notebook => (
+            <NotebookButton
+              key={notebook.id}
+              label={notebook.label}
+              id={notebook.id}
+            />
+          ))}
         </NotebookList>
       </>
     );

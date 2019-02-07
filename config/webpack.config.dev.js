@@ -9,14 +9,15 @@ mainConfig.mode = 'development';
 mainConfig.target = 'electron-main';
 mainConfig.entry = { main: './src/main.ts' };
 
-
 const rendererConfig = require('./webpack.config.base')(true);
 rendererConfig.mode = 'development';
 rendererConfig.target = 'electron-renderer';
 rendererConfig.entry = { renderer: './src/renderer.tsx' };
-rendererConfig.plugins.push( new HtmlPlugin({
-  inject: true,
-  template: path.resolve(ROOT_DIR, 'public/index.html'),
-}),);
+rendererConfig.plugins.push(
+  new HtmlPlugin({
+    inject: true,
+    template: path.resolve(ROOT_DIR, 'public/index.html'),
+  })
+);
 
 module.exports = [mainConfig, rendererConfig];

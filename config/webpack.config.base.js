@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HardSourcePlugin = require('hard-source-webpack-plugin');
 const HappyPackPlugin = require('happypack');
 
-const happyThreadPool = HappyPackPlugin.ThreadPool({size: 5});
+const happyThreadPool = HappyPackPlugin.ThreadPool({ size: 5 });
 
 const ROOT_DIR = path.resolve('.');
 const SOURCE_DIR = path.resolve(ROOT_DIR, 'src');
@@ -17,16 +17,18 @@ const BUILD_DIR = path.resolve(ROOT_DIR, 'build/webpack');
 
 module.exports = (isDev = false) => {
   const plugins = [
-    new CleanPlugin(BUILD_DIR, {root: ROOT_DIR}),
+    new CleanPlugin(BUILD_DIR, { root: ROOT_DIR }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     //new HardSourcePlugin({}),
-    createHappyPlugin('ts', [{
-      loader: 'ts-loader',
-      options: {
-        transpileOnly: true,
-        happyPackMode: true,
+    createHappyPlugin('ts', [
+      {
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          happyPackMode: true,
+        },
       },
-    }]),
+    ]),
     /*new HtmlPlugin({
       inject: true,
       template: path.resolve(ROOT_DIR, 'public/index.html'),
@@ -46,7 +48,10 @@ module.exports = (isDev = false) => {
   if (isDev) {
     plugins.push(createHappyPlugin('css', ['style-loader', CSS_LOADER]));
   } else {
-    plugins.push(new MiniCssExtractPlugin(), createHappyPlugin('css', [MiniCssExtractPlugin.loader, CSS_LOADER]))
+    plugins.push(
+      new MiniCssExtractPlugin(),
+      createHappyPlugin('css', [MiniCssExtractPlugin.loader, CSS_LOADER])
+    );
   }
 
   return {
@@ -71,19 +76,12 @@ module.exports = (isDev = false) => {
       path.resolve(SOURCE_DIR, 'renderer.jsx'),
     ],
     output: {
-      chunkFilename: "[name].[chunkhash:4].js",
+      chunkFilename: '[name].[chunkhash:4].js',
       filename: '[name].[chunkhash]'.js,
       path: BUILD_DIR,
     },
     resolve: {
-      extensions: [
-        '.ts',
-        '.js',
-        '.mjs',
-        '.tsx',
-        '.jsx',
-        '.json',
-      ],
+      extensions: ['.ts', '.js', '.mjs', '.tsx', '.jsx', '.json'],
     },
     module: {
       rules: [
@@ -117,7 +115,7 @@ module.exports = (isDev = false) => {
     },
     plugins,
     node: {
-      __dirname: false
+      __dirname: false,
     },
   };
 };

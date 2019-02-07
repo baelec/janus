@@ -7,7 +7,12 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "node scripts/start.js"
+    "start": "node scripts/start.js",
+    "prettier_css": "yarn run prettier --config ./config/prettier/prettier.config.css.js --write ./**/*.css",
+    "prettier_html": "yarn run prettier --config ./config/prettier/prettier.config.html.js --write ./public/*.html",
+    "prettier_json": "yarn run prettier --config ./config/prettier/prettier.config.json.js --write ./**/*.json",
+    "prettier_md": "yarn run prettier --config ./config/prettier/prettier.config.md.js --write ./*.md",
+    "prettier_ts": "yarn run prettier --config ./config/prettier/prettier.config.ts.js --write ./**/*.{ts,tsx,js,jsx}"
   },
   "author": "Michael Lynch",
   "devDependencies": {
@@ -22,8 +27,11 @@
     "happypack": "^5.0.1",
     "hard-source-webpack-plugin": "^0.13.1",
     "html-webpack-plugin": "3.2.0",
+    "husky": "^1.3.1",
     "jest": "24.1.0",
+    "lint-staged": "^8.1.3",
     "mini-css-extract-plugin": "^0.5.0",
+    "prettier": "^1.16.4",
     "source-map-loader": "^0.2.4",
     "style-loader": "0.23.1",
     "ts-jest": "23.10.5",
@@ -37,7 +45,20 @@
     "webpack-dev-server": "3.1.14"
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.12.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.css": ["yarn run prettier_ts", "git add"],
+    "*.html": ["yarn run prettier_html", "git add"],
+    "*.json": ["yarn run prettier_json", "git add"],
+    "*.md": ["yarn run prettier_md", "git add"],
+    "*.{ts,tsx,js,jsx}": ["yarn run prettier_ts", "git add"]
   }
 }

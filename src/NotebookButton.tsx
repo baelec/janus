@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { Button } from '@blueprintjs/core';
 
 type Props = {
   label: string;
@@ -12,8 +13,6 @@ export class NotebookButton extends React.PureComponent<Props> {
 
   render() {
     const { label, id } = this.props;
-    return (
-      <button onClick={() => alert(id)}>{label}</button>
-    );
+    return <Button onClick={() => alert(id)}>{label}</Button>;
   }
 }

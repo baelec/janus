@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-type Props = {
-}
+type Props = {};
 
 export class NotebookList extends React.PureComponent<Props> {
   constructor(props: Props) {
@@ -10,10 +9,6 @@ export class NotebookList extends React.PureComponent<Props> {
 
   render() {
     const { children } = this.props;
-    return (
-      <div>
-        {children}
-      </div>
-    );
+    return <div>{children}</div>;
   }
 }
